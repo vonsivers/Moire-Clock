@@ -185,7 +185,6 @@ void setup()
   RTCInit();
   InitSteppers();
   delay(1000);
-  //AdjustWheel(SECONDS);
   FindHomePosition();
   //KeypadControl();  // control motors via serial terminal
   setSpeed(); // speed must be set after homing

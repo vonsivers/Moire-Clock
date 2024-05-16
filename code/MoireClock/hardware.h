@@ -32,8 +32,6 @@ const int SEC_DIR_PIN = 13;
 
 const int NOT_ENABLE_PIN = 8;       //Active low ENABLE pin to turn on stepper drivers
 
-const int LED_PIN = 12;          // SpnEn pin
-
 const int HALL_MINUTES_PIN = 11;          // Z-limit pin
 const int HALL_TOM_PIN = 10;           // Y-limit pin
 const int HALL_HOURS_PIN = 9;         // X-limit pin

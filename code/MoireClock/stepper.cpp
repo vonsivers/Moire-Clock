@@ -12,8 +12,6 @@
 #include <SpeedyStepper.h> // https://github.com/Stan-Reifel/SpeedyStepper
 #include "hardware.h"
 #include "stepper.h"
-#include "LEDs.h"
-#include "FastLED.h"
 
 //=====================================
 // Global Variables
@@ -42,8 +40,6 @@ void DisableSteppers() {
 //=====================================
 void InitSteppers() {
     
-    InitLEDs(); // also init LEDs
-
     minsStepper.connectToPins(MINS_STEP_PIN, MINS_DIR_PIN);
     minsStepper.setStepsPerRevolution(MINUTES_STEPS_PER_REVOLUTION);
 
@@ -72,6 +68,7 @@ void setSpeed() {
     tomStepper.setAccelerationInStepsPerSecondPerSecond(TOM_ACCELERATION);
     
     hoursStepper.setSpeedInStepsPerSecond(HOURS_SPEED);
+    hoursStepper.setAccelerationInStepsPerSecondPerSecond(HOURS_ACCELERATION);
     
     secStepper.setSpeedInStepsPerSecond(SECONDS_SPEED);
 
@@ -316,8 +313,8 @@ void FindHomePosition() {
     // rotate until hall switch triggers
     
     MoveToHome(MINUTES, HOME_SPEED, 1.1*MINUTES_STEPS_PER_REVOLUTION, HALL_MINUTES_PIN);
-    //MoveToHome(TOM, HOME_SPEED, 1.1*TOM_STEPS_PER_REVOLUTION, HALL_TOM_PIN);   
-    //MoveToHome(HOURS, HOME_SPEED, 1.1*HOURS_STEPS_PER_REVOLUTION, HALL_HOURS_PIN); 
+    MoveToHome(TOM, HOME_SPEED, 1.1*TOM_STEPS_PER_REVOLUTION, HALL_TOM_PIN);   
+    MoveToHome(HOURS, HOME_SPEED, 1.1*HOURS_STEPS_PER_REVOLUTION, HALL_HOURS_PIN); 
 
    
 }
@@ -337,7 +334,7 @@ void AdjustWheel(int iMotor) {
           hoursStepper.setSpeedInStepsPerSecond(HOURS_SPEED/2);
           break;
       case SECONDS :
-          secStepper.setSpeedInStepsPerSecond(SECONDS_SPEED*10);
+          secStepper.setSpeedInStepsPerSecond(SECONDS_SPEED);
           break;
     }
   MoveAbsoluteRevs(iMotor, -10);
@@ -347,8 +344,7 @@ void AdjustWheel(int iMotor) {
 // rotate seconds wheel
 void RotateSeconds() {
   
-  cycleAllLEDs();
-  EVERY_N_MILLISECONDS( 1000/SECONDS_SPEED ) { secStepper.moveRelativeInSteps(-1); }
+  MoveRelative(SECONDS, -SECONDS_STEPS_PER_REVOLUTION/60);
 
 }
 

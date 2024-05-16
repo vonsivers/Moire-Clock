@@ -1,25 +1,20 @@
-//==========================================================================
-// Moire Clock - LEDs.cpp
-//
-// Copyright (c) 2024, Moritz v. Sivers
-//
-// based on Slide Clock by Craig Colvin, https://github.com/moose408/SlideClock
-//
-// Licensed under Creative Commons License
-// Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
-//==========================================================================
+#define LED_TYPE    WS2811
+#define COLOR_ORDER GRB
+#define NUM_LEDS    20
 
-#include "LEDs.h"
+#define BRIGHTNESS         255
+#define FRAMES_PER_SECOND  120
+
+const int LED_PIN = 2;          
+
 #include <FastLED.h>
-#include "hardware.h"
 
 FASTLED_USING_NAMESPACE
 
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
 CRGB leds[NUM_LEDS];
 
-void InitLEDs() {
-  
+void setup() {
   // tell FastLED about the LED strip configuration
   FastLED.addLeds<LED_TYPE,LED_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
   //FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
@@ -28,18 +23,7 @@ void InitLEDs() {
   FastLED.setBrightness(BRIGHTNESS);
 }
 
-void lightLED(int iLED) {
-  
-  FastLED.clear(); 
-  leds[iLED] = CHSV(gHue, 255, 255);
-  // send the 'leds' array out to the actual LED strip
-  FastLED.show();  
-
-}
-
-  
-void cycleAllLEDs()
-{
+void loop() {
   // Call the current pattern function once, updating the 'leds' array
   //Patterns[gCurrentPatternNumber]();
   fill_solid(leds, NUM_LEDS, CHSV(gHue, 255, 255));
@@ -52,6 +36,3 @@ void cycleAllLEDs()
   // do some periodic updates
   EVERY_N_MILLISECONDS( 50 ) { gHue++; } // slowly cycle the "base color" through the rainbow
 }
-
-
-
