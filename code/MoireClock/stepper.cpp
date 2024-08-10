@@ -349,6 +349,20 @@ void RotateSeconds() {
 }
 
 
+// move motors one after another
+void TestMotors() {
+  MoveRelative(HOURS, HOURS_STEPS_PER_REVOLUTION);
+  MoveRelative(HOURS, -HOURS_STEPS_PER_REVOLUTION);
 
+  MoveRelative(TOM, TOM_STEPS_PER_REVOLUTION);
+  MoveRelative(TOM, -TOM_STEPS_PER_REVOLUTION);
+
+  MoveRelative(MINUTES, MINUTES_STEPS_PER_REVOLUTION);
+  MoveRelative(MINUTES, -MINUTES_STEPS_PER_REVOLUTION);
+
+  MoveRelative(SECONDS, SECONDS_STEPS_PER_REVOLUTION);
+  MoveRelative(SECONDS, -SECONDS_STEPS_PER_REVOLUTION);
+
+}
 
 

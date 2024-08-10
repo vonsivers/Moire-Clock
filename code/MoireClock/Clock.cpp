@@ -70,7 +70,13 @@ int GetDigit(DateTime dtTime, int iDigitPos)
      return dtTime.minute() / 10;
      break;
     case HOURS:
-      return dtTime.hour() % 10;
+      if(dtTime.hour()>12) {
+        return dtTime.hour() - 12;
+      }
+      else {
+        return dtTime.hour();
+      }
+      
       break; 
   }
 }
@@ -101,7 +107,6 @@ void PrintCurrentTime() {
 
     dtTime = rtc.now(); 
     
-    Serial.print(GetDigit(dtTime,SECONDS));
     Serial.print(GetDigit(dtTime,HOURS));
     Serial.print(":");
     Serial.print(GetDigit(dtTime,TOM));
@@ -112,7 +117,6 @@ void PrintCurrentTime() {
 //=========================================
 void PrintTime(DateTime dtTime) {
 
-    Serial.print(GetDigit(dtTime,SECONDS));
     Serial.print(GetDigit(dtTime,HOURS));
     Serial.print(":");
     Serial.print(GetDigit(dtTime,TOM));
@@ -151,7 +155,7 @@ void UpdateDisplayTime() {
 
     // update hours, tom, minutes
     for(int iMotor=0; iMotor<3; ++iMotor) {
-      MoveAbsoluteCW(iMotor, GetDigitSteps(iMotor, GetDigit(dtNewDisplayedTime, iMotor)));
+      MoveAbsolute(iMotor, GetDigitSteps(iMotor, GetDigit(dtNewDisplayedTime, iMotor)));
     }
 
     //Update current display time
@@ -174,7 +178,7 @@ void UpdateDisplayTimeShow() {
 
     // update hours, tom, minutes
     for(int iMotor=0; iMotor<3; ++iMotor) {
-      MoveAbsoluteCW(iMotor, GetDigitSteps(iMotor, GetDigit(dtCurrentDisplayedTime, iMotor)));
+      MoveAbsolute(iMotor, GetDigitSteps(iMotor, GetDigit(dtCurrentDisplayedTime, iMotor)));
     }
 
     //Update current display time
@@ -190,7 +194,7 @@ void initTimeShow() {
 
 void testHours() {
   for(int dig=1; dig<13; dig++) {
-    MoveAbsoluteCW(HOURS, GetDigitSteps(HOURS, dig));
+    MoveAbsolute(HOURS, GetDigitSteps(HOURS, dig));
     delay(2000);
   }
   
@@ -198,7 +202,7 @@ void testHours() {
 
 void testTOM() {
   for(int dig=0; dig<6; dig++) {
-    MoveAbsoluteCW(TOM, GetDigitSteps(TOM, dig));
+    MoveAbsolute(TOM, GetDigitSteps(TOM, dig));
     delay(2000);
   }
   
@@ -206,7 +210,7 @@ void testTOM() {
 
 void testMins() {
   for(int dig=0; dig<10; dig++) {
-    MoveAbsoluteCW(MINUTES, GetDigitSteps(MINUTES, dig));
+    MoveAbsolute(MINUTES, GetDigitSteps(MINUTES, dig));
     delay(2000);
   }
   

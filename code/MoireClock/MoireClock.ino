@@ -183,11 +183,13 @@ void setup()
 
 
   RTCInit();
+  PrintCurrentTime();
   InitSteppers();
   delay(1000);
   FindHomePosition();
   //KeypadControl();  // control motors via serial terminal
   setSpeed(); // speed must be set after homing
+  //TestMotors();
   RunClock();
   //RunClockShow();  // run clock in demo mode
 }

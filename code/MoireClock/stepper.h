@@ -18,17 +18,17 @@ const int TOM = 1;
 const int HOURS = 0;
 
 // Motor parameters
-const int HOURS_STEPS_PER_REVOLUTION = 5960; // full steps
-const int TOM_STEPS_PER_REVOLUTION = 5960*2; // half steps
-const int MINUTES_STEPS_PER_REVOLUTION = 5960*2; // half steps
-const int SECONDS_STEPS_PER_REVOLUTION = 5960*4; // quarter steps
-const int HOURS_SPEED = 2000;
-const int HOURS_ACCELERATION = 100;
+const int HOURS_STEPS_PER_REVOLUTION = 400*16; // 0.9 deg step angle, 16th steps
+const int TOM_STEPS_PER_REVOLUTION = 400*16; 
+const int MINUTES_STEPS_PER_REVOLUTION = 400*16; 
+const int SECONDS_STEPS_PER_REVOLUTION = 400*16; 
+const int HOURS_SPEED = 1000;
+const int HOURS_ACCELERATION = 500;
 const int TOM_SPEED = 2000;  
 const int TOM_ACCELERATION = 100;
 const int MINUTES_SPEED = 2000;  
 const int MINUTES_ACCELERATION = 100;
-const int HOME_SPEED = 500;
+const int HOME_SPEED = 200;
 
 // speed of seconds wheel in steps per second
 const long SECONDS_SPEED = SECONDS_STEPS_PER_REVOLUTION/360; // /3600; // moire period is 6° so 0.1°/s is one full rotation every 60s
